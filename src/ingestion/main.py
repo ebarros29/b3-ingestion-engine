@@ -81,6 +81,7 @@ def fetch_ticker_data(ticker: str, start: str, end: str) -> pd.DataFrame:
         df.columns = [col[0] if col[1] == "" else col[0] for col in df.columns]
 
     df.columns = [str(c).strip() for c in df.columns]
+    df["Date"] = pd.to_datetime(df["Date"]).astype("datetime64[us]")
     df["ticker"] = ticker
     df["ingested_at"] = datetime.utcnow().isoformat()
 
