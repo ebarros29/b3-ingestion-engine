@@ -15,6 +15,8 @@ The pipeline follows a modern Data Lake architecture (Raw/Refined layers):
 4. **Refinement**: Processed data is saved back to **AWS S3 (Refined Zone)** in partitioned Parquet format.
 5. **Consumption**: Data is cataloged in the **AWS Glue Data Catalog** and made available for SQL queries via **Amazon Athena**.
 
+![Data Pipeline](./docs/glue_data_pipe.png)
+
 ## 🛠️ Tech Stack
 
 - **Language:** Python 3.x / PySpark
