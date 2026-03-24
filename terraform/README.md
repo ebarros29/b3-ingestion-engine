@@ -6,34 +6,7 @@ Automated infrastructure for the B3 Stock Market Data Ingestion and Processing E
 
 This infrastructure implements a serverless ETL pipeline that automatically processes B3 stock market data.
 
-```
-┌─────────────────┐
-│  Raw S3 Bucket  │
-│  (Landing Zone) │
-└────────┬────────┘
-         │
-         │ S3 Event Notification
-         │ (ObjectCreated:*)
-         ▼
-┌─────────────────┐
-│ Lambda Function │
-│  Trigger Glue   │
-└────────┬────────┘
-         │
-         │ Starts Job Run
-         ▼
-┌─────────────────┐
-│  AWS Glue Job   │
-│  (Spark ETL)    │
-└────────┬────────┘
-         │
-         │ Reads & Transforms
-         ▼
-┌─────────────────┐      ┌──────────────────┐
-│ Refined Bucket  │◄─────┤ Glue Data Catalog│
-│ (Curated Data)  │      │    (Metadata)    │
-└─────────────────┘      └──────────────────┘
-```
+![Data Pipeline](../docs/glue_data_pipe.png)
 
 ## AWS Resources
 

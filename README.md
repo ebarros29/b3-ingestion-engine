@@ -15,7 +15,34 @@ The pipeline follows a modern Data Lake architecture (Raw/Refined layers):
 4. **Refinement**: Processed data is saved back to **AWS S3 (Refined Zone)** in partitioned Parquet format.
 5. **Consumption**: Data is cataloged in the **AWS Glue Data Catalog** and made available for SQL queries via **Amazon Athena**.
 
-![Data Pipeline](./docs/glue_data_pipe.png)
+```
+┌─────────────────┐
+│  Raw S3 Bucket  │
+│  (Landing Zone) │
+└────────┬────────┘
+         │
+         │ S3 Event Notification
+         │ (ObjectCreated:*)
+         ▼
+┌─────────────────┐
+│ Lambda Function │
+│  Trigger Glue   │
+└────────┬────────┘
+         │
+         │ Starts Job Run
+         ▼
+┌─────────────────┐
+│  AWS Glue Job   │
+│  (Spark ETL)    │
+└────────┬────────┘
+         │
+         │ Reads & Transforms
+         ▼
+┌─────────────────┐      ┌──────────────────┐
+│ Refined Bucket  │◄─────┤ Glue Data Catalog│
+│ (Curated Data)  │      │    (Metadata)    │
+└─────────────────┘      └──────────────────┘
+```
 
 ## 🛠️ Tech Stack
 
